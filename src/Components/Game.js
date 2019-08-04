@@ -19,15 +19,15 @@ const Game = ({ mode, difficulty }) => {
     let cards = allCards;
     switch (difficulty) {
       case "easy":
-        cards = allCards.slice(0, 6);
+        cards = shuffle(allCards).slice(0, 6);
         break;
       case "medium":
-        cards = allCards.slice(0, 8);
+        cards = shuffle(allCards).slice(0, 8);
         break;
       default:
         break;
     }
-    setCards(() => shuffle([...cards, ...cards]));
+    setCards([...cards, ...cards]);
   }, [difficulty]);
 
   //To Store player score and pass them
