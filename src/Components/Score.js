@@ -4,9 +4,9 @@ import React from "react";
 import MultiplayerScore from "./MultiplayerScore";
 import SingleplayerScore from "./SingleplayerScore";
 
-const Score = ({ mode, score, failedFlips, playerTurn }) => {
+const Score = ({ mode, score, failedFlips, playerOne }) => {
   if (mode === "multi")
-    return <MultiplayerScore score={score} playerTurn={playerTurn} />;
+    return <MultiplayerScore score={score} playerOne={playerOne} />;
   return <SingleplayerScore failedFlips={failedFlips} />;
 };
 

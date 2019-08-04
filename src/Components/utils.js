@@ -8,3 +8,8 @@ export const shuffle = list => {
   }
   return list;
 };
+
+export const duplicate = listOfObjects => [
+  ...listOfObjects,
+  ...listOfObjects.map(obj => ({ ...obj }))
+];

@@ -1,16 +1,16 @@
 import React from "react";
 
-const MultiplayerScore = ({ score, playerTurn }) => {
+const MultiplayerScore = ({ score, playerOne }) => {
   return (
     <div className="col-3 border">
       <h3>Score</h3>
       <table className="table table-responsive mx-auto">
         <thead>
           <tr>
-            <th scope="col" className={playerTurn && "text-danger"}>
+            <th scope="col" className={playerOne ? "text-danger" : ""}>
               Player 1
             </th>
-            <th scope="col" className={!playerTurn && "text-danger"}>
+            <th scope="col" className={!playerOne ? "text-danger" : ""}>
               Player 2
             </th>
           </tr>

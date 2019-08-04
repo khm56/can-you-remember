@@ -1,91 +1,62 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // Data
 import allCards from "../data";
 
 // Utils
-import { shuffle } from "./utils";
+import { shuffle, duplicate } from "./utils";
 
 // Components
-import Card from "./Card";
 import Score from "./Score";
+import Grid from "./Grid";
 
 const Game = ({ mode, difficulty }) => {
-  const [cards, setCards] = useState([]);
-  //   const [flippedCards, changeFlipped] = useState([]);
-
-  //Used to duplicate the amount of cards since we need two of each and shuffle them using the function defined at the top
-  useEffect(() => {
-    let cards = allCards;
-    switch (difficulty) {
-      case "easy":
-        cards = shuffle(allCards).slice(0, 6);
-        break;
-      case "medium":
-        cards = shuffle(allCards).slice(0, 8);
-        break;
-      default:
-        break;
-    }
-    setCards([...cards, ...cards]);
-  }, [difficulty]);
-
-  //To Store player score and pass them
+  //To Store player score and pass them in multiplayer mode
   const [score, setScore] = useState([0, 0]);
-
+  // To Store player score and pass it in single player mode
+  const [failedFlips, setFailed] = useState(0);
   //To know which player's turn it is
-  const [playerTurn, setPlayerTurn] = useState(true);
-  const [failedFlips, increaseFailed] = useState(0);
+  const [playerOne, setPlayerOne] = useState(true);
 
-  let flippedCards = [];
-  const changeFlipped = anArray => {
-    flippedCards = anArray;
-  };
+  //Used to duplicate the amount of cards since we need two of each and shuffle them using the functions defined at the top
+  let cards = shuffle(allCards);
+  switch (difficulty) {
+    case "easy":
+      cards = cards.slice(0, 6);
+      break;
+    case "medium":
+      cards = cards.slice(0, 8);
+      break;
+    default:
+      break;
+  }
+  cards = shuffle(duplicate(cards));
 
-  const unflipCards = (unflip1, unflip2) => {
-    setTimeout(() => {
-      unflip1(false);
-      unflip2(false);
-    }, 1000);
-  };
-
-  const checkFlipped = flippedObject => {
-    changeFlipped([...flippedCards, flippedObject]);
-
-    if (flippedCards.length === 2) {
-      if (flippedCards[0].id !== flippedCards[1].id) {
-        unflipCards(flippedCards[0].changeFlip, flippedCards[1].changeFlip);
-        increaseFailed(failedFlips + 1);
-        setPlayerTurn(!playerTurn);
+  const updateScore = match => {
+    if (match && mode === "multi") {
+      if (playerOne) {
+        setScore([(score[0] += 1), score[1]]);
       } else {
-        if (mode === "multi") {
-          if (playerTurn) {
-            setScore([(score[0] += 1), score[1]]);
-          } else {
-            setScore([score[0], (score[1] += 1)]);
-          }
-        }
+        setScore([score[0], (score[1] += 1)]);
       }
-      changeFlipped([]);
+    } else if (!match && mode === "single") {
+      setFailed(failedFlips + 1);
     }
   };
-
-  //Mapping through the array of cards and placing them in the card componenet
-  const cardList = cards.map((card, idx) => (
-    <Card key={`${card.id}-${idx}`} card={card} checkFlipped={checkFlipped} />
-  ));
 
   return (
     <div className="container">
       <div className="row">
-        <div className=" col-9">
-          <div className="row border">{cardList}</div>
-        </div>
+        <Grid
+          cards={cards}
+          updateScore={updateScore}
+          togglePlayerOne={() => setPlayerOne(!playerOne)}
+        />
         <Score
           mode={mode}
           score={score}
           failedFlips={failedFlips}
-          playerTurn={playerTurn}
+          playerOne={playerOne}
         />
       </div>
     </div>

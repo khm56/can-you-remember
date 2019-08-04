@@ -12,43 +12,53 @@ import UberCard from "./images/UberCard.jpg";
 const cards = [
   {
     id: 1,
-    front: AppleCard
+    front: AppleCard,
+    flipped: false
   },
   {
     id: 2,
-    front: CareemCard
+    front: CareemCard,
+    flipped: false
   },
   {
     id: 3,
-    front: CiscoCard
+    front: CiscoCard,
+    flipped: false
   },
   {
     id: 4,
-    front: EbayCard
+    front: EbayCard,
+    flipped: false
   },
   {
     id: 5,
-    front: FacebookCard
+    front: FacebookCard,
+    flipped: false
   },
   {
     id: 6,
-    front: GoogleCard
+    front: GoogleCard,
+    flipped: false
   },
   {
     id: 7,
-    front: IntelCard
+    front: IntelCard,
+    flipped: false
   },
   {
     id: 8,
-    front: PaypalCard
+    front: PaypalCard,
+    flipped: false
   },
   {
     id: 9,
-    front: TwitterCard
+    front: TwitterCard,
+    flipped: false
   },
   {
     id: 10,
-    front: UberCard
+    front: UberCard,
+    flipped: false
   }
 ];
 

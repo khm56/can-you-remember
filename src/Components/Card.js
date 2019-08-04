@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import cardBack from "../images/CardBack.jpg";
 import ReactCardFlip from "react-card-flip";
 
-const Card = ({ card, checkFlipped }) => {
-  const [flipped, changeFlip] = useState(false);
+const Card = ({ card, flipCard }) => {
+  const { flipped } = card;
 
-  const handleFlip = () => {
-    if (flipped !== true) {
-      changeFlip(true);
+  const handleFlip = () => !flipped && flipCard(card);
 
-      checkFlipped({ id: card.id, changeFlip: changeFlip });
-    }
-  };
   return (
     <div className="col-3 my-1">
       <ReactCardFlip isFlipped={flipped} flipDirection="horizontal">
@@ -22,6 +17,7 @@ const Card = ({ card, checkFlipped }) => {
           height="100%"
           width="100%"
           key="front"
+          alt="front"
           onClick={() => handleFlip()}
         />
 
@@ -32,6 +28,7 @@ const Card = ({ card, checkFlipped }) => {
           height="100%"
           width="100%"
           key="back"
+          alt="back"
           onClick={() => handleFlip()}
         />
       </ReactCardFlip>
